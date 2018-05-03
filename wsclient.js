@@ -1,3 +1,4 @@
+
 var wsUri = "ws://127.0.0.1:1337/";
 var output;
 
@@ -28,7 +29,7 @@ function connect() {
 
 function onOpen(evt) {
     writeToScreen("CONNECTED");
-    doSend("WebSocket rocks");
+    doSend("Securino web app connected");
 }
 
 function onClose(evt) {

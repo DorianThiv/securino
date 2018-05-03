@@ -1,5 +1,5 @@
 const URL_PROTOCOLE = 'mqtt://';
-const URL_HOST = '127.0.0.1';
+const URL_HOST = '192.168.0.15';
 const URL_PORT = 1337;
 
 var http = require('http');
