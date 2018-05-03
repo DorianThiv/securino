@@ -1,0 +1,15 @@
+{
+  "name": "securino-node",
+  "version": "1.0.0",
+  "description": "mqtt client and tcp socket",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Dorian",
+  "license": "ISC",
+  "dependencies": {
+    "jquery": "^3.3.1",
+    "mqtt": "^2.17.0"
+  }
+}
