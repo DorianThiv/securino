@@ -17,7 +17,6 @@
 int main(int argc, char *argv[])
 {
 	std::shared_ptr<MqttPublisher> mqttPublisher;
-	int rc;
 
 	mosqpp::lib_init();
 
