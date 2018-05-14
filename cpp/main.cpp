@@ -1,4 +1,14 @@
 
+/************************************************************************
+ *
+ *                           LoRa to MQTT
+ * 
+ *                          Dorian THIVOLLE
+ *                      dorian_thivolle@orange.fr
+ *                               CASIR
+ * 
+ ************************************************************************/
+
 #include <memory>
 
 #include "MqttPublisher.h"
