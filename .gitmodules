@@ -1,0 +1,6 @@
+[submodule "radiohead"]
+	path = lib/radiohead
+	url = https://github.com/adafruit/RadioHead.git
+[submodule "mosquitto"]
+	path = lib/mosquitto
+	url = https://github.com/eclipse/mosquitto.git
