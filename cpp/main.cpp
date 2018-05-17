@@ -2,11 +2,11 @@
 /************************************************************************
  *
  *                           LoRa to MQTT
- * 
+ *
  *                          Dorian THIVOLLE
  *                      dorian_thivolle@orange.fr
  *                               CASIR
- * 
+ *
  ************************************************************************/
 
 #include <memory>
@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
 	mosqpp::lib_init();
 
 	mqttPublisher = std::make_shared<MqttPublisher>("frequency_publisher", "localhost", 1883);
-	mqttPublisher->on_publish("Salut Habib");
+	mqttPublisher->on_publish("{ \"device\": \"arduino\", \"type\": \"temp\", \"value\": 26.4, \"unit\": \"°C\" }");
 
 	mosqpp::lib_cleanup();
 

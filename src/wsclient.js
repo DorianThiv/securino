@@ -37,7 +37,23 @@ function onClose(evt) {
 }
 
 function onMessage(evt) {
-    writeToScreen('<span style = "color: blue;">RESPONSE: ' + evt.data + '</span>');
+    if (evt !== undefined) {
+        try {
+            var dataJson = JSON.parse(evt.data);
+            if (dataJson !== undefined) {
+                writeToScreen(
+                    '<div style = "background-color: green; color: white; width: 300px; padding: 20px">' + 
+                    '<p>Device : ' + dataJson.device + '</p>' +
+                    '<p>Sensor : ' + dataJson.type + '</p>' +
+                    '<p>Value : ' + dataJson.value + ' ' + dataJson.unit + '</p>' +
+                    '</div>');
+            }
+        } catch (error) {
+            writeToScreen('<span style = "color: red;">ERROR : ' + error + '</span>');
+        }
+    } else {
+        writeToScreen('<span style = "color: red;">ERROR event is undefined : ' + evt + '</span>');
+    }
 }
 
 function onError(evt) {
