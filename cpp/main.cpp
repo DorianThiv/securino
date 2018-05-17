@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
 	mosqpp::lib_init();
 
 	mqttPublisher = std::make_shared<MqttPublisher>("frequency_publisher", "localhost", 1883);
-	mqttPublisher->on_publish("Hello");
+	mqttPublisher->on_publish("Salut Habib");
 
 	mosqpp::lib_cleanup();
 

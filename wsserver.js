@@ -17,7 +17,7 @@
  */
 
 const URL_PROTOCOLE = 'mqtt://';
-const URL_HOST = '192.168.0.15';
+const URL_HOST = 'localhost';
 const URL_PORT = 1337;
 
 const TOPICS = [

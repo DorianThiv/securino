@@ -2,6 +2,11 @@
 
 ## Getting Started
 
+Clone project
+```
+git clone --recursive https://github.com/DorianThiv/securino.git
+```
+
 Install npm packages from packages.json
 ```
 npm install
@@ -21,6 +26,13 @@ firefox index.html
 ```
 
 Launch cpp "MQTT publisher"
+You have to compile mosquitto library to have libmosquitto.so
+```
+cd lib/mosquitto
+make
+cd ..
+```
+
 ```
 cd cpp/
 make all
