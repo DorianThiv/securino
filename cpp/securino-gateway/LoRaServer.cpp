@@ -12,8 +12,6 @@
 
 RH_RF95 rf95;
 
-int run = 1;
-
 LoRaServer::LoRaServer()
 {
     run = 1;
@@ -31,17 +29,12 @@ void LoRaServer::setup()
         exit(1);
     }
 
-    /* Tx Power is from +5 to +23 dbm */
     rf95.setTxPower(23);
-    /* There are different configurations
-     * you can find in lib/radiohead/RH_RF95.h 
-     * at line 437 
-     */
     rf95.setModemConfig(RH_RF95::Bw125Cr45Sf128);
-    rf95.setFrequency(868.0); /* MHz */
+    rf95.setFrequency(868.0);
 
 	mosqpp::lib_init();
-	mqttPublisher = make_shared<MqttPublisher>("frequency_publisher", "localhost", 1883);
+	mqttPublisher = make_shared<MqttPublisher>("lora_publisher", "localhost", 1883);
 
 }
 
@@ -54,7 +47,14 @@ void LoRaServer::loop()
 
         if (rf95.recv(buf, &len)) 
         {
-            printf("from %d, number %d\n", buf[0], buf[1]);
+            printf("[RECEIVE] : ");
+            int i = 0;
+            while (i < len)
+            {
+                printf("%c", buf[i]);
+                i++;
+            }
+            printf("\n");
             // mqttPublisher->on_publish("{ \"device\": \"arduino\", \"type\": \"temp\", \"value\": 26.4, \"unit\": \"°C\" }");
         }
     }
