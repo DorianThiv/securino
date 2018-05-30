@@ -9,14 +9,17 @@
  *
  ************************************************************************/
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
 #include <signal.h>
 #include <memory>
 
-#include "LoRaServer"
+#include "LoRaServer.h"
 
 using namespace std;
 
-shared_ptr<LoRaSever> loraServer;
+shared_ptr<LoRaServer> loraServer;
 
 void sigint_handler(int signal)
 {
