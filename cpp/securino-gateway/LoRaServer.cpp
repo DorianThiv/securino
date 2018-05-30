@@ -40,7 +40,6 @@ void LoRaServer::setup()
 
 	mosqpp::lib_init();
 	mqttPublisher = make_shared<MqttPublisher>("lora_publisher", "localhost", 1883);
-    printf("[$] MQTT initialized\n");
     printf("[$] Wait for message ...\n");
 
 }
@@ -62,7 +61,7 @@ void LoRaServer::loop()
                 i++;
             }
             printf("\n");
-            // mqttPublisher->on_publish("{ \"device\": \"arduino\", \"type\": \"temp\", \"value\": 26.4, \"unit\": \"°C\" }");
+            mqttPublisher->on_publish((char*)buf);
         }
     }
 }

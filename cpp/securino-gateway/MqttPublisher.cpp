@@ -8,6 +8,7 @@ MqttPublisher::MqttPublisher(const char *id, const char *host, int port) : mosqu
 {
 	int keepalive = 60;
 	connect(host, port, keepalive);
+    printf("[$] MQTT initialized\n");
 };
 
 MqttPublisher::~MqttPublisher() { }
@@ -15,7 +16,7 @@ MqttPublisher::~MqttPublisher() { }
 void MqttPublisher::on_publish(char * message)
 {
 	publish(NULL, "arduino/temp", strlen(message), message);
-	printf("[i] Publish : %s\n", message);
+	printf("[$] Publish : %s\n", message);
 }
 
 void MqttPublisher::on_connect(int rc)
