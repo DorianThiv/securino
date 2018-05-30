@@ -14,10 +14,11 @@ RH_RF95 rf95;
 
 LoRaServer::LoRaServer()
 {
-    run = 1;
-    signal(SIGINT, sigint_handler);
+    running = 1;
     setup();
 }
+
+LoRaServer::~LoRaServer() {}
 
 void LoRaServer::setup()
 { 
@@ -28,6 +29,10 @@ void LoRaServer::setup()
         fprintf(stderr, "Init failed\n");
         exit(1);
     }
+    else
+    {
+        printf("[$] LoRa initialized\n");
+    }
 
     rf95.setTxPower(23);
     rf95.setModemConfig(RH_RF95::Bw125Cr45Sf128);
@@ -35,6 +40,8 @@ void LoRaServer::setup()
 
 	mosqpp::lib_init();
 	mqttPublisher = make_shared<MqttPublisher>("lora_publisher", "localhost", 1883);
+    printf("[$] MQTT initialized\n");
+    printf("[$] Wait for message ...\n");
 
 }
 
@@ -62,7 +69,7 @@ void LoRaServer::loop()
 
 void LoRaServer::run()
 {
-    while(run)
+    while(running)
     {
         loop();
         usleep(1);
@@ -71,6 +78,6 @@ void LoRaServer::run()
 
 void LoRaServer::stop()
 {
-    run = 0;
+    running = 0;
     mosqpp::lib_cleanup();
 }

@@ -1,6 +1,3 @@
-
-
-
 #ifndef __LORA_SERVER_H__
 #define __LORA_SERVER_H__
 
@@ -29,6 +26,7 @@ class LoRaServer
         void setup();
         void loop();
 
+        int running;
         shared_ptr<MqttPublisher> mqttPublisher;
 };
 

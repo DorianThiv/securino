@@ -1,18 +1,29 @@
-CFLAGS=-std=c++11 -Wall -ggdb -I../../lib/mosquitto/lib -I../../lib/mosquitto/lib/cpp
-LDFLAGS=-L../../lib/mosquitto/lib ../../lib/mosquitto/lib/cpp/libmosquittopp.so.1 ../../lib/mosquitto/lib/libmosquitto.so.1
+TARGET=chisterapi
 
-.PHONY: all clean
+CC=gcc
+CXX=g++
+RM=rm -f
 
-all : securino_frequency_to_mqtt
+INCLUDES_PATH=-I ../../lib/radiohead/ -I ../../lib/mosquitto/lib -I ../../lib/mosquitto/lib/cpp
+CPPFLAGS=-std=c++11 -g -Wall -DRH_PLATFORM=RH_PLATFORM_RPI -D__RASPBERRY_PI_ $(INCLUDES_PATH)
+CFLAGS=-g -Wall -DRH_PLATFORM=RH_PLATFORM_RPI -D__RASPBERRY_PI_ $(INCLUDES_PATH)
+LDFLAGS=-lwiringPi -L../../lib/mosquitto/lib ../../lib/mosquitto/lib/cpp/libmosquittopp.so.1 ../../lib/mosquitto/lib/libmosquitto.so.1
 
-securino_frequency_to_mqtt : main.o MqttPublisher.o
-	${CXX} $^ -o $@ ${LDFLAGS}
+RH95_SRCS=../../lib/radiohead/RH_RF95.cpp \
+	../../lib/radiohead/RHGenericSPI.cpp \
+	../../lib/radiohead/RHLinuxSPI.cpp \
+ 	../../lib/radiohead/RHGenericDriver.cpp
+RH95_OBJS=$(subst .cpp,.o,$(RH95_SRCS))
 
-main.o : main.cpp
-	${CXX} -c $^ -o $@ ${CFLAGS}
+all: $(TARGET)
 
-MqttPublisher.o : MqttPublisher.cpp
-	${CXX} -c $^ -o $@ ${CFLAGS}
+$(TARGET): main.o MqttPublisher.o LoRaServer.o $(RH95_OBJS)
+	$(CXX) $(LDFLAGS) -o $@ $^
 
-clean : 
-	-rm -f *.o securino_frequency_to_mqtt
+%.o: %.cpp
+	$(CXX) $(CPPFLAGS) -o $@ -c $<
+%.o: %.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+clean:
+	$(RM) -f $(TARGET) $(RH95_OBJS) main.o
