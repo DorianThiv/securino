@@ -39,3 +39,14 @@ make all
 ./securino_frequency_to_mqtt
 ```
 
+If error on execution cannot load shared libmosquittopp.so.1
+```
+$ vi /etc/ld.so.conf
+    include ld.so.conf.d/*.conf
+    include /usr/local/lib
+    /usr/lib
+    /usr/local/lib
+$ /sbin/ldconfig
+$ ln -s /usr/local/lib/libmosquitto.so.1 /usr/lib/libmosquitto.so.1
+```
+
