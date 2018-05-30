@@ -9,22 +9,25 @@
  *
  ************************************************************************/
 
+#include <signal.h>
 #include <memory>
 
-#include "MqttPublisher.h"
+#include "LoRaServer"
 
+using namespace std;
+
+shared_ptr<LoRaSever> loraServer;
+
+void sigint_handler(int signal)
+{
+	loraServer->stop();
+}
 
 int main(int argc, char *argv[])
 {
-	std::shared_ptr<MqttPublisher> mqttPublisher;
-
-	mosqpp::lib_init();
-
-	mqttPublisher = std::make_shared<MqttPublisher>("frequency_publisher", "localhost", 1883);
-	mqttPublisher->on_publish("{ \"device\": \"arduino\", \"type\": \"temp\", \"value\": 26.4, \"unit\": \"°C\" }");
-
-	mosqpp::lib_cleanup();
-
+	signal(SIGINT, sigint_handler);
+	loraServer = make_shared<LoRaServer>();
+	loraServer->run();
 	return 0;
 }
 
