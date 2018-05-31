@@ -1,5 +1,6 @@
 /**
- * Securino Transferts Server (SecurinoTS)
+ * Securino Server 
+ * ----------------------------------------------
  * 
  * This Nodejs module call too external modules (mqtt, websocket).
  * It provide a MQTT client which will subscribe to a mqtt topic (ex: 'presence')
@@ -11,6 +12,9 @@
  * MQTT ---- TCP-SRV ---- TCP-CLI
  * 
  * MQTT.js library: https://github.com/mqttjs/MQTT.js.git
+ * 
+ * @author: THIVOLLE Dorian
+ * @author: BELHADJ SALEM Habib
  * 
  * Git: https://github.com/DorianThiv/securino.git
  * 

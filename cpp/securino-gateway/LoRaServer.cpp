@@ -1,15 +1,3 @@
-/*
- * Snootlab 
- *-----------------------------------------------------------------------------------------
- * Example of a communication between two Chistera-Pi or between a Chistera-Pi and a sensor
- * with a RFM95 like Snootlab's TeensyWiNo.
- * This is the receiver code, the Chistera-Pi receives a message with an address and a 
- * counter and it prints the informations on the prompt.
- *
- */
-
-
-#include <string>
 
 #include "LoRaServer.h"
 #include "SecurinoDecoder.h"

@@ -1,4 +1,13 @@
 
+/**********************************************************
+*
+*                     MQTT Publisher
+*
+*                    THIVOLLE Dorian
+*                dorian_thivolle@orange.fr
+*                         CASIR
+*
+***********************************************************/
 
 #include <mosquittopp.h>
 
