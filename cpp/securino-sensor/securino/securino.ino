@@ -28,14 +28,18 @@ uint8_t tabrfid[3];
 void processDht()
 {
 	s_sensor->check(tabdht);
-	uint8_t * temp = tabdht[2];
-	uint8_t * humi = tabdht[3];
-	uint8_t tabdt[TAB_SIZE_SENSOR] = tabdht;
-	uint8_t tabdh[TAB_SIZE_SENSOR] = tabdht;
-	tabdt[2] = 84;
-	tabdt[3] = temp;
-	tabdh[2] = 72;
-	tabdh[3] = humi;
+	uint8_t temp = tabdht[2];
+	uint8_t humi = tabdht[3];
+	uint8_t tabdt[TAB_SIZE_SENSOR] = {65, 66, 84, 32};
+	uint8_t tabdh[TAB_SIZE_SENSOR] = {65, 66, 72, 10};
+//  tabdt[0] = tabdht[0];
+//  tabdt[1] = tabdht[1];
+//	tabdt[2] = 84;
+//	tabdt[3] = temp;
+//  tabdh[0] = tabdht[0];
+//  tabdh[1] = tabdht[1];
+//	tabdh[2] = 72;
+//	tabdh[3] = humi;
 	s_lora->send(tabdt, TAB_SIZE_SENSOR);
 	s_lora->send(tabdh, TAB_SIZE_SENSOR);
 }

@@ -1,12 +1,59 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
     <head>
         <meta charset="utf-8"/>
         <title>Securino Web App</title>
+        <script src="jquery-3.3.1.min.js" language="javascript" type="text/javascript"></script>
+        <script src="bootstrap.min.js" language="javascript" type="text/javascript"></script>
         <script src="wsclient.js" language="javascript" type="text/javascript"></script>
+        <link href="bootstrap.min.css" rel="stylesheet"/>
     </head>
     <body>
-        <h1>Securino</h1>
-        <p id="output"></p>
-        <button onclick="doClose()">Close Websocket</button>
+        <div class="container">
+            <h1>Securino</h1>
+            <p id="state"></p>
+            <p id="error"></p>
+            <!-- <button onclick="connect()">Open Connection</button> -->
+            <div class="row">
+                <div class="col-md-4 card bg-success" style="color: white; width: 15rem;">
+                    <h5 class="card-title">Temperature</h5>
+                    <!-- <img class="card-img-top" src="../doc/148800.png"> -->
+                    <div class="card-body">
+                        <ul>
+                            <li id="temp-device"></li>
+                            <li id="temp-sensor"></li>
+                            <li id="temp-value"></li>
+                            <li id="temp-unit"></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4 card bg-info" style="color: white; width: 15rem;">
+                    <h5 class="card-title">Humidity</h5>
+                    <!-- <img class="card-img-top" src="../doc/ls-h901.png"> -->
+                    <div class="card-body">
+                        <ul>
+                            <li id="humi-device"></li>
+                            <li id="humi-sensor"></li>
+                            <li id="humi-value"></li>
+                            <li id="humi-unit"></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4 card bg-warning" style="color: white; width: 15rem;">
+                    <h5 class="card-title">Lazer</h5>
+                    <!-- <img class="card-img-top" src="../doc/OkuloLatere.svg.png"> -->
+                    <div class="card-body">
+                        <ul>
+                            <li id="lazer-device"></li>
+                            <li id="lazer-sensor"></li>
+                            <li id="lazer-value"></li>
+                            <li id="lazer-unit"></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <button class="btn btn-primary" onclick="close()">Close Connection</button>
+        </div>
     </body>
 </html>

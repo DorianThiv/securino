@@ -1,79 +1,143 @@
 
 var wsUri = "ws://192.168.0.18:1337/";
-var output;
+
+var state;
+var error;
+
+var tempDevice;
+var tempSensor;
+var tempValue;
+var tempUnit;
+
+var humiDevice;
+var humiSensor;
+var humiValue;
+var humiUnit;
+
+var lazerDevice;
+var lazerSensor;
+var lazerValue;
+var lazerUnit;
 
 function init() {
-    output = document.getElementById("output");
+    state = $('#state');
+    error = $('#error');
+
+    tempDevice = $('#temp-device');
+    tempSensor = $('#temp-sensor');
+    tempValue = $('#temp-value');
+    tempUnit = $('#temp-unit');
+
+    lazerDevice = $('#lazer-device');
+    lazerSensor = $('#lazer-sensor');
+    lazerValue = $('#lazer-value');
+    lazerUnit = $('#lazer-unit');
+
+    humiDevice = $('#humi-device');
+    humiSensor = $('#humi-sensor');
+    humiValue = $('#humi-value');
+    humiUnit = $('#humi-unit');
+
     connect();
 }
 
 function connect() {
     websocket = new WebSocket(wsUri);
     
-    websocket.onopen = function(evt) {
-        onOpen(evt)
+    websocket.onopen = function(event) {
+        onOpen(event)
     };
     
-    websocket.onclose = function(evt) {
-        onClose(evt)
+    websocket.onclose = function(event) {
+        onClose(event)
     };
     
-    websocket.onmessage = function(evt) {
-        onMessage(evt)
+    websocket.onmessage = function(event) {
+        onMessage(event)
     };
     
-    websocket.onerror = function(evt) {
-        onError(evt)
+    websocket.onerror = function(event) {
+        onError(event)
     };
 }
 
-function onOpen(evt) {
-    writeToScreen("CONNECTED");
-    doSend("Securino web app connected");
+function onOpen(event) {
+    writeState("CONNECTED");
+    send("Securino web app connected");
 }
 
-function onClose(evt) {
-    writeToScreen("DISCONNECTED");
+function onClose(event) {
+    writeState("DISCONNECTED");
 }
 
-function onMessage(evt) {
-    console.log(evt);
-    if (evt !== undefined) {
+function onMessage(event) {
+    console.log(event);
+    if (event !== undefined) {
         try {
-            var dataJson = JSON.parse(evt.data);
+            var dataJson = JSON.parse(event.data);
             if (dataJson !== undefined) {
-                writeToScreen(
-                    '<div style = "background-color: green; color: white; width: 300px; padding: 20px">' + 
-                    '<p>Device : ' + dataJson.device + '</p>' +
-                    '<p>Sensor : ' + dataJson.type + '</p>' +
-                    '<p>Value : ' + dataJson.value + ' ' + dataJson.unit + '</p>' +
-                    '</div>');
+                switch (dataJson.sensor) {
+                    case "temperature":
+                        writeTemp(dataJson);
+                        break;
+                    case "humidity":
+                        writeHumi(dataJson);
+                        break;
+                    case "lazer":
+                        writeLazer(dataJson);
+                        break;
+                    default:
+                        writeError('<span style = "color: red;">ERROR : Unknow sensor ...</span>');
+                        break;
+                }
             }
         } catch (error) {
-            writeToScreen('<span style = "color: red;">ERROR : ' + error + '</span>');
+            writeError('<span style = "color: red;">ERROR : ' + error + '</span>');
         }
     } else {
-        writeToScreen('<span style = "color: red;">ERROR event is undefined : ' + evt + '</span>');
+        writeError('<span style = "color: red;">ERROR event is undefined : ' + event + '</span>');
     }
 }
 
-function onError(evt) {
-    writeToScreen('<span style = "color: red;">ERROR:</span> ' + evt.data);
+function onError(event) {
+    writeState('<span style = "color: red;">ERROR:</span> ' + event.data);
 } 
           
-function doSend(message) {
-    writeToScreen("SENT: " + message); websocket.send(message);
+function send(message) {
+   websocket.send(message);
 }
 
-function doClose() {
+function close() {
     websocket.close();
 }
 
-function writeToScreen(message) {
-    var pre = document.createElement("p"); 
-    pre.style.wordWrap = "break-word"; 
-    pre.innerHTML = message; 
-    output.appendChild(pre);
+function writeState(message) {
+    state.html(message);
+}
+
+function writeTemp(message) {
+    tempDevice.html(message.device);
+    tempSensor.html(message.sensor);
+    tempValue.html(message.value);
+    tempUnit.html(message.unit);
+}
+
+function writeHumi(message) {
+    humiDevice.html(message.device);
+    humiSensor.html(message.sensor);
+    humiValue.html(message.value);
+    humiUnit.html(message.unit);
+}
+
+function writeLazer(message) {
+    lazerDevice.html(message.device);
+    lazerSensor.html(message.sensor);
+    lazerValue.html(message.value);
+    lazerUnit.html(message.unit);
+}
+
+function writeError(message) {
+    error.html(message);
 }
 
 window.addEventListener("load", init, false);
