@@ -1,18 +1,21 @@
 #ifndef __SECURINO_LAZER_H__
 #define __SECURINO_LAZER_H__
 
+#include <Arduino.h>
+
 class SecurinoLazer {
   
   public:
     
-    SecurinoLazer(int _pin);
+    SecurinoLazer(int _pinLazer, int _pinDetector);
     ~SecurinoLazer();
     
-    void check();
+  void check(uint8_t * laz);
     
   private:
     
-    int pin;
+    int pinLazer;
+    int pinDetector;
   
 };
 

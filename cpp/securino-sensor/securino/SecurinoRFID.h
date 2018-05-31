@@ -1,18 +1,21 @@
 #ifndef __SECURINO_RFID_H__
 #define __SECURINO_RFID_H__
+#include <Arduino.h>
+
 
 class SecurinoRFID {
   
   public:
     
-    SecurinoRFID(int _pin);
+    SecurinoRFID(int _pinRfid1, int _pinRfid2);
     ~SecurinoRFID();
     
     void check();
     
   private:
     
-    int pin;
+    int pinRfid1;
+    int pinRfid2;
   
 };
 
