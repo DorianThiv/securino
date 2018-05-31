@@ -1,5 +1,5 @@
 
-var wsUri = "ws://127.0.0.1:1337/";
+var wsUri = "ws://192.168.0.18:1337/";
 var output;
 
 function init() {
@@ -37,6 +37,7 @@ function onClose(evt) {
 }
 
 function onMessage(evt) {
+    console.log(evt);
     if (evt !== undefined) {
         try {
             var dataJson = JSON.parse(evt.data);

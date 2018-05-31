@@ -1,6 +1,8 @@
 #ifndef __SECURINO_SENSOR_H__
 #define __SECURINO_SENSOR_H__
 
+#include <Arduino.h>
+
 class SecurinoSensor {
   
   public:
@@ -8,7 +10,7 @@ class SecurinoSensor {
     SecurinoSensor(int _pin);
     ~SecurinoSensor();
     
-    void check();
+    void check(uint8_t * dht);
     
   private:
     
