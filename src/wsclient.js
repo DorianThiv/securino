@@ -1,5 +1,17 @@
 
-var wsUri = "ws://192.168.0.18:1337/";
+/**
+ * Securino web app
+ * --------------------------------------
+ * @author: THIVOLLE Dorian
+ * @author: BELHADJ SALEM Habib
+ * 
+ * Set a websocket connection with the server to
+ * receive data from gateway.
+ */
+
+const ip = "192.168.0.18";
+
+var wsUri = "ws://" + ip + ":1337/";
 
 var state;
 var error;
@@ -20,6 +32,7 @@ var lazerValue;
 var lazerUnit;
 
 function init() {
+
     state = $('#state');
     error = $('#error');
 
@@ -43,32 +56,17 @@ function init() {
 
 function connect() {
     websocket = new WebSocket(wsUri);
-    
-    websocket.onopen = function(event) {
-        onOpen(event)
-    };
-    
-    websocket.onclose = function(event) {
-        onClose(event)
-    };
-    
-    websocket.onmessage = function(event) {
-        onMessage(event)
-    };
-    
-    websocket.onerror = function(event) {
-        onError(event)
-    };
+    websocket.onopen = function(event) { onOpen(event) };
+    websocket.onclose = function(event) { onClose(event) };
+    websocket.onmessage = function(event) { onMessage(event) };
+    websocket.onerror = function(event) { onError(event) };
 }
 
-function onOpen(event) {
-    writeState("CONNECTED");
-    send("Securino web app connected");
-}
+function onOpen(event) { writeState("CONNECTED"); send("Securino web app connected"); }
 
-function onClose(event) {
-    writeState("DISCONNECTED");
-}
+function onClose(event) { writeState("DISCONNECTED"); }
+
+function onError(event) { writeError('<span style = "color: red;">ERROR:</span> ' + event.data); } 
 
 function onMessage(event) {
     console.log(event);
@@ -98,22 +96,14 @@ function onMessage(event) {
         writeError('<span style = "color: red;">ERROR event is undefined : ' + event + '</span>');
     }
 }
-
-function onError(event) {
-    writeState('<span style = "color: red;">ERROR:</span> ' + event.data);
-} 
           
-function send(message) {
-   websocket.send(message);
-}
+function send(message) { websocket.send(message); }
 
-function close() {
-    websocket.close();
-}
+function close() { websocket.close(); }
 
-function writeState(message) {
-    state.html(message);
-}
+function writeState(message) { state.html(message); }
+
+function writeError(message) { error.html(message); }
 
 function writeTemp(message) {
     tempDevice.html(message.device);
@@ -134,10 +124,6 @@ function writeLazer(message) {
     lazerSensor.html(message.sensor);
     lazerValue.html(message.value);
     lazerUnit.html(message.unit);
-}
-
-function writeError(message) {
-    error.html(message);
 }
 
 window.addEventListener("load", init, false);

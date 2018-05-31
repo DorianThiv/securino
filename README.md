@@ -15,6 +15,7 @@ npm install
 "wsserver.js" is a MQTT client. It send messages on TCP websocket.
 In this file there is a simple list (TOPICS). She contains the topics to subscribe.
 Change topics to subscribe on others.
+Set IP address in.
 Launch server "MQTT to TCP"
 ```
 node wsserver.js
@@ -34,12 +35,17 @@ cd ..
 ```
 
 ```
-cd cpp/
+cd cpp/securino-gateway
 make all
-./securino_frequency_to_mqtt
+./chisterapi
 ```
 
 If error on execution cannot load shared libmosquittopp.so.1
+Try install mosquitto:
+```
+sudo apt-get install mosquitto mosquitto-dev    
+```
+Or
 ```
 $ vi /etc/ld.so.conf
     include ld.so.conf.d/*.conf
