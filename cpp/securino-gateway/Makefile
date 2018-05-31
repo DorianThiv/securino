@@ -17,7 +17,7 @@ RH95_OBJS=$(subst .cpp,.o,$(RH95_SRCS))
 
 all: $(TARGET)
 
-$(TARGET): main.o MqttPublisher.o LoRaServer.o $(RH95_OBJS)
+$(TARGET): main.o MqttPublisher.o LoRaServer.o SecurinoDecoder.o $(RH95_OBJS)
 	$(CXX) $(LDFLAGS) -o $@ $^
 
 %.o: %.cpp

@@ -8,7 +8,11 @@
  *
  */
 
+
+#include <string>
+
 #include "LoRaServer.h"
+#include "SecurinoDecoder.h"
 
 RH_RF95 rf95;
 
@@ -21,7 +25,7 @@ LoRaServer::LoRaServer()
 LoRaServer::~LoRaServer() {}
 
 void LoRaServer::setup()
-{ 
+{
     wiringPiSetupGpio();
 
     if (!rf95.init()) 
@@ -50,18 +54,20 @@ void LoRaServer::loop()
     {
         uint8_t buf[RH_RF95_MAX_MESSAGE_LEN];
         uint8_t len = sizeof(buf);
+        char fbuf[RH_RF95_MAX_MESSAGE_LEN];
 
-        if (rf95.recv(buf, &len)) 
+        if (rf95.recv(buf, &len))
         {
-            printf("[RECEIVE] : ");
+            printf("Receive length :  %d", len);
             int i = 0;
             while (i < len)
             {
-                printf("%c", buf[i]);
+                sprintf(fbuf+i*2, "%02x", buf[i]);
                 i++;
             }
             printf("\n");
-            mqttPublisher->on_publish((char*)buf);
+            SecurinoDecoder::decode(buf);
+            // mqttPublisher->on_publish(fbuf);
         }
     }
 }
