@@ -58,16 +58,18 @@ void LoRaServer::loop()
 
         if (rf95.recv(buf, &len))
         {
-            printf("Receive length :  %d", len);
+            printf("=> Receive Frame ============\n");
+            printf("=> LoRa Message : ");
             int i = 0;
             while (i < len)
             {
-                sprintf(fbuf+i*2, "%02x", buf[i]);
+                // sprintf(fbuf+i*2, "%02x", buf[i]);
+                printf("0x%02x ", buf[i]);
                 i++;
             }
             printf("\n");
-            SecurinoDecoder::decode(buf);
-            // mqttPublisher->on_publish(fbuf);
+            SecurinoDecoder::decode(fbuf, buf, len);
+            mqttPublisher->on_publish(fbuf);
         }
     }
 }
