@@ -1,5 +1,5 @@
 # Adds
-lib/
+lib/mosquitto/
 .o
 
 # Logs
